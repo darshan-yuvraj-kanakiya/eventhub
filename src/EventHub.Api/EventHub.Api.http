@@ -1,0 +1,6 @@
+@EventHub.Api_HostAddress = http://localhost:5213
+
+GET {{EventHub.Api_HostAddress}}/ping/
+Accept: application/json
+
+###
