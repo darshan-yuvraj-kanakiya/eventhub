@@ -4,3 +4,6 @@ GET {{EventHub.Api_HostAddress}}/ping/
 Accept: application/json
 
 ###
+
+GET {{EventHub.Api_HostAddress}}/event
+
