@@ -5,17 +5,6 @@ Accept: application/json
 
 ###
 
-GET {{EventHub.Api_HostAddress}}/event
+GET {{EventHub.Api_HostAddress}}/events
 
 ###
-
-GET {{EventHub.Api_HostAddress}}/groupEventsByMonth
-
-###
-
-GET {{EventHub.Api_HostAddress}}/fewSeats
-
-###
-
-GET {{EventHub.Api_HostAddress}}/paginated
-
