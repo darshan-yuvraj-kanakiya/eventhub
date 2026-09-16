@@ -1,15 +1,16 @@
 using EventHub.Api.Domain;
-using EventHub.Api.Examples;
 using EventHub.Api.Extensions;
 using EventHub.Api.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Host.UseDefaultServiceProvider(options =>
+{
+    options.ValidateScopes = true;
+    options.ValidateOnBuild = true;
+});
 
-builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddApplication(builder.Configuration);
 
 var app = builder.Build();
 
