@@ -9,7 +9,23 @@ public class EventService : IEventService
 {
     private readonly List<Event> _events = LinqExamples.CreateEvents();
 
-    public async Task<List<Event>> GetAllAsync(CancellationToken ct)
+    public async Task<Event> Create(CreateEventDto createEventDto, CancellationToken ct)
+    {
+        await Task.Delay(500, ct);
+
+        Event newEvent = new()
+        {
+            Title = createEventDto.Title,
+            StartsAt = createEventDto.StartsAt,
+            TotalSeats = createEventDto.TotalSeats
+        };
+
+        _events.Add(newEvent);
+
+        return newEvent;
+    }
+
+    public async Task<IReadOnlyList<Event>> GetAllAsync(CancellationToken ct)
     {
         await Task.Delay(1000, ct);
         return _events;
@@ -32,4 +48,12 @@ public class EventService : IEventService
             yield return e;
         }
     }
+}
+
+
+public record CreateEventDto
+{
+    public required string Title { get; set; }
+    public required DateTimeOffset StartsAt { get; set; }
+    public required int TotalSeats { get; set; }
 }

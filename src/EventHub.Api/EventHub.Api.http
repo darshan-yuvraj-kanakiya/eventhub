@@ -5,6 +5,13 @@ Accept: application/json
 
 ###
 
-GET {{EventHub.Api_HostAddress}}/events
+POST {{EventHub.Api_HostAddress}}/api/v1//events
 
 ###
+
+
+GET {{EventHub.Api_HostAddress}}/api/v1//events
+
+###
+
+GET {{EventHub.Api_HostAddress}}/api/v1//events/new

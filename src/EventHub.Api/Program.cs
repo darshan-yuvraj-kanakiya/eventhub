@@ -1,5 +1,7 @@
 using EventHub.Api.Domain;
+using EventHub.Api.Endpoints;
 using EventHub.Api.Extensions;
+using EventHub.Api.Middleware;
 using EventHub.Api.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,24 +16,24 @@ builder.Services.AddApplication(builder.Configuration);
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
+app.UseMiddleware<CorrelationIdMiddleware>();
+
+app.UseCors("spa");
+app.UseRateLimiter();
+
 app.UseHttpsRedirection();
 
 app.MapGet("/ping", () => "pong");
 
 // The events of the next 7 days, sorted by the start time.
-app.MapGet("/events", async (IEventService eventService, CancellationToken ct) => {
-    var eventsTask = eventService.GetAllAsync(ct);
-    var usersTask = UserService.GetAllAsync(ct);
-    await Task.WhenAll(eventsTask, usersTask);
-    var events = await eventsTask;
-    var users = await usersTask;
-    return Results.Ok(events);
-});
+app.MapEventEndpoints();
 
 app.Run();
